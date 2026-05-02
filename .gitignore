@@ -1,0 +1,51 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Data files (exclude specific large files, keep UMAP-related)
+patients.csv
+encounters.csv
+
+# Output folders
+output_journey_umap/
+
+# Scripts not related to UMAP
+social_determinants_statistical.py
+social_determinants_heatmap.py
+random_forest_feature_importance.py
+healthcare_analytics_pipeline.py
+system_capture_leakage_general.py
+treatment_path_mapping.py
+enhanced_umap_analysis.py
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
