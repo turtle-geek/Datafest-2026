@@ -1,17 +1,21 @@
-# Datafest 2026 - Diabetes Patient Journey UMAP Analysis
+# Datafest 2026 - Healthcare Access Optimization & Patient Journey Analysis
 
-This project analyzes diabetes patient journey types using UMAP (Uniform Manifold Approximation and Projection) for dimensionality reduction and visualization.
+This project analyzes diabetes patient journey types using UMAP (Uniform Manifold Approximation and Projection) for dimensionality reduction and visualization, and optimizes healthcare facility placement using geospatial analysis and greedy maximum coverage algorithms.
 
 ## Project Structure
 
 ```
 Datafest/
-├── umap_journey_types.py          # Main UMAP training and visualization script
-├── umap_journey_contours.py       # UMAP visualization adjustment script (no retraining)
-├── journey_umap_patients.csv      # Patient features with UMAP coordinates
-├── team21_journey_umap.pkl        # Trained UMAP model
-├── team21_journey_scaler.pkl      # Feature scaler for UMAP
-└── output_journey_umap/           # Generated outputs (not in git)
+├── umap_journey_types.py                 # Main UMAP training and visualization script
+├── umap_journey_visualization.py         # UMAP visualization with loose light shading
+├── umap_journey_contours.py              # UMAP visualization with contour plots
+├── patient_attended_city_distance.py      # Geographic distance analysis by journey type
+├── location_optimization.py             # Greedy maximum coverage facility placement
+├── placement_model_two_stage.py           # Two-stage regression placement model
+├── journey_umap_patients.csv             # Patient features with UMAP coordinates
+├── team21_journey_umap.pkl               # Trained UMAP model
+├── team21_journey_scaler.pkl             # Feature scaler for UMAP
+└── output_journey_umap/                  # Generated outputs (not in git)
 ```
 
 ## Scripts
@@ -56,6 +60,81 @@ python umap_journey_contours.py
 - `alpha`: Shading transparency (lower = more transparent)
 - `bandwidth`: KDE bandwidth for contour smoothing
 
+### umap_journey_visualization.py
+Script for creating UMAP visualization with loose light shading effects.
+
+**Features:**
+- Loads existing UMAP data from `journey_umap_patients.csv`
+- Applies different bandwidths and alpha values per journey type
+- Creates refined loose shading for better cluster visibility
+- Generates visualization with improved aesthetic parameters
+
+**Usage:**
+```bash
+python umap_journey_visualization.py
+```
+
+### patient_attended_city_distance.py
+Script for analyzing geographic distance patterns by patient journey type and hospital city.
+
+**Features:**
+- Calculates patient distance to attended hospital city
+- Groups patients by journey type and city
+- Generates triple box and whisker plots
+- Analyzes distance patterns across Stormont Vail Health cities
+
+**Usage:**
+```bash
+python patient_attended_city_distance.py
+```
+
+**Outputs:**
+- `geographic_distance_analysis/distance_to_attended_city_boxplot.png` - Box plot visualization
+- `geographic_distance_analysis/distance_to_attended_city_stats.csv` - Distance statistics
+
+### location_optimization.py
+Script for optimizing healthcare facility placement using greedy maximum coverage algorithm.
+
+**Features:**
+- Loads patient and provider locations from census data
+- Computes current healthcare coverage
+- Implements greedy maximum coverage algorithm
+- Identifies optimal locations for new facilities
+- Generates interactive geographic coverage map
+
+**Usage:**
+```bash
+python location_optimization.py
+```
+
+**Outputs:**
+- `coverage_map.html` - Interactive map showing facility coverage
+- Console output with coverage statistics
+
+**Key Parameters:**
+- `R`: Coverage radius in km (default: 10 km)
+- `K_MAX`: Maximum number of facilities to test (default: 80)
+- `TARGET_COVERAGE`: Target coverage percentage (default: 90%)
+
+### placement_model_two_stage.py
+Two-stage regression model for healthcare facility placement optimization.
+
+**Features:**
+- Stage 1: Logistic regression for probability of hospital usage based on distance
+- Stage 2: Linear regression for visits per patient based on distance
+- Combined model predicts expected demand: population × probability × visits per patient
+- Network expansion approach (adding facilities, not replacing)
+- Greedy search for optimal multiple facility locations
+
+**Usage:**
+```bash
+python placement_model_two_stage.py
+```
+
+**Outputs:**
+- `optimal_locations_{n}_facilities.csv` - Optimal facility locations
+- Console output with investor-friendly summary
+
 ## Journey Types
 
 The analysis classifies patients into three journey types:
@@ -81,15 +160,20 @@ The analysis classifies patients into three journey types:
 - matplotlib
 - seaborn
 - scipy
+- plotly
+- webbrowser
 
 ## Installation
 
 ```bash
-pip install pandas numpy scikit-learn umap-learn matplotlib seaborn scipy
+pip install pandas numpy scikit-learn umap-learn matplotlib seaborn scipy plotly
 ```
 
 ## Notes
 
-- The UMAP model is trained on ~27k diabetes patients
+- The UMAP model is trained on 7,383 diabetes patients
 - Random state is set to 42 for reproducibility
 - The visualization uses refined shading parameters for optimal cluster visibility
+- Facility placement optimization identifies 48 optimal sites to increase coverage from 65.4% to 79.7%
+- Geographic distance analysis covers Stormont Vail Health cities across Kansas
+- Two-stage regression model quantifies "travel friction" impact on healthcare utilization
