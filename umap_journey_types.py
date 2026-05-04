@@ -266,13 +266,13 @@ for journey_type, color in journey_colors.items():
             xmin, xmax = x.min(), x.max()
             ymin, ymax = y.min(), y.max()
             
-            # Extend grid slightly
+            # Extend grid more for looser shading
             x_range = xmax - xmin
             y_range = ymax - ymin
-            xmin -= x_range * 0.1
-            xmax += x_range * 0.1
-            ymin -= y_range * 0.1
-            ymax += y_range * 0.1
+            xmin -= x_range * 0.3
+            xmax += x_range * 0.3
+            ymin -= y_range * 0.3
+            ymax += y_range * 0.3
             
             # Create grid
             xx, yy = np.mgrid[xmin:xmax:100j, ymin:ymax:100j]
@@ -281,32 +281,33 @@ for journey_type, color in journey_colors.items():
             positions = np.vstack([xx.ravel(), yy.ravel()])
             values = np.vstack([x, y])
             
-            # Use smaller bandwidth for red clusters to follow shape better
+            # Use larger bandwidth for looser shading around all clusters
             if journey_type == 'Abandoned (Static Journey)':
-                bandwidth = 0.3  # Smaller bandwidth for more detailed shape-following
+                bandwidth = 0.6  # Larger bandwidth for looser red shading
+            elif journey_type == 'Cycler (Clinical Redirection)':
+                bandwidth = 0.8  # Larger bandwidth for looser yellow shading
             else:
-                bandwidth = None  # Default bandwidth for yellow and green
+                bandwidth = 0.7  # Larger bandwidth for looser green shading
             
             kernel = gaussian_kde(values, bw_method=bandwidth)
             zz = np.reshape(kernel(positions).T, xx.shape)
             
             # Calculate contours for shading (don't plot the lines)
-            # Use more levels for all clusters now
-            levels = 8 if journey_type == 'Abandoned (Static Journey)' else 7
+            # Use fewer levels for lighter, looser shading
+            levels = 6
             contours = plt.contour(xx, yy, zz, levels=levels, colors=color, alpha=0)  # alpha=0 to hide lines
             
             # Add shading only within the contour paths using the contour vertices
-            # For red clusters, shade inner levels for compact shading but ensure at least 2 circles
-            # For yellow and green, shade more levels for increased shading depth
+            # Use lighter alpha values for looser shading
             if journey_type == 'Abandoned (Static Journey)':
-                start_level = 3  # Inner levels for compact red shading with at least 2 circles
-                alpha = 0.12
+                start_level = 2  # Shade outer levels for looser red shading
+                alpha = 0.08  # Lighter alpha for looser shading
             elif journey_type == 'Cycler (Clinical Redirection)':
-                start_level = 2  # Reduce yellow shading to be more compact
-                alpha = 0.20  # Higher contrast for yellow
+                start_level = 2  # Shade outer levels for looser yellow shading
+                alpha = 0.10  # Lighter alpha for looser shading
             else:
-                start_level = 1  # Shade more levels for larger green shading
-                alpha = 0.12
+                start_level = 2  # Shade outer levels for looser green shading
+                alpha = 0.08  # Lighter alpha for looser shading
             for level_idx, path_collection in enumerate(contours.allsegs):
                 if level_idx >= start_level:
                     for path in path_collection:
