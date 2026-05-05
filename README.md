@@ -143,6 +143,14 @@ The analysis classifies patients into three journey types:
 2. **Cycler (Clinical Redirection)** - Patients who cycle through different care pathways
 3. **Escalator (Care Escalation)** - Patients whose care escalates over time
 
+## Visualizations
+
+### UMAP Patient Journey Types
+![UMAP Patient Journey Types](Patient_UMAP.png)
+
+### Distance to Hospital by Journey Type and City
+![Distance to Hospital by Journey Type and City](geographic_distance_analysis/distance_to_attended_city_boxplot.png)
+
 ## Visualization Features
 
 - **KDE-based cluster shading** - Transparent shading around clusters using kernel density estimation
