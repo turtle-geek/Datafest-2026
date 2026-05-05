@@ -20,10 +20,8 @@ Datafest/
 
 ## Visualizations
 
-### UMAP Patient Journey Types
 ![UMAP Patient Journey Types](umap_journey_types_visualization.png)
 
-### Distance to Hospital by Journey Type and City
 ![Distance to Hospital by Journey Type and City](distance_by_journey_type_and_city.png)
 
 ## Scripts
