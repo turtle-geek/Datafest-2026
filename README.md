@@ -18,6 +18,14 @@ Datafest/
 └── output_journey_umap/                  # Generated outputs (not in git)
 ```
 
+## Visualizations
+
+### UMAP Patient Journey Types
+![UMAP Patient Journey Types](umap_journey_types_visualization.png)
+
+### Distance to Hospital by Journey Type and City
+![Distance to Hospital by Journey Type and City](distance_by_journey_type_and_city.png)
+
 ## Scripts
 
 ### umap_journey_types.py
@@ -142,14 +150,6 @@ The analysis classifies patients into three journey types:
 1. **Abandoned (Static Journey)** - Patients who disengage from care
 2. **Cycler (Clinical Redirection)** - Patients who cycle through different care pathways
 3. **Escalator (Care Escalation)** - Patients whose care escalates over time
-
-## Visualizations
-
-### UMAP Patient Journey Types
-![UMAP Patient Journey Types](umap_journey_types_visualization.png)
-
-### Distance to Hospital by Journey Type and City
-![Distance to Hospital by Journey Type and City](distance_by_journey_type_and_city.png)
 
 ## Visualization Features
 
