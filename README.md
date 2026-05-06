@@ -1,6 +1,6 @@
-# UmapCare: Clinical Site Modeler & Patient Journey Optimization
+# UmapCare
 
-This project analyzes diabetes patient journey types using UMAP (Uniform Manifold Approximation and Projection) for dimensionality reduction and visualization, and optimizes healthcare facility placement using geospatial analysis and greedy maximum coverage algorithms.
+A healthcare tool that maps patient journeys and uses geographic data to find the best locations for new medical facilities. It uses UMAP for data visualization and greedy maximum coverage algorithms to ensure health services reach as many people as possible.
 
 ## Project Structure
 
