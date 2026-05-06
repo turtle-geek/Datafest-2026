@@ -1,4 +1,4 @@
-# Datafest 2026 - Healthcare Access Optimization & Patient Journey Analysis
+# UmapCare: Clinical Site Modeler & Patient Journey Optimization
 
 This project analyzes diabetes patient journey types using UMAP (Uniform Manifold Approximation and Projection) for dimensionality reduction and visualization, and optimizes healthcare facility placement using geospatial analysis and greedy maximum coverage algorithms.
 
